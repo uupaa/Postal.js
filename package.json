@@ -1,0 +1,20 @@
+{
+  "name":           "uupaa.postal.js",
+  "version":        "0.8.0",
+  "description":    "Message delivery utility.",
+  "url":            "https://github.com/uupaa/Postal.js",
+  "keywords":       ["message", "passing", "postal", "util", "uupaa"],
+  "author":         "uupaa <uupaa.js@gmail.com>",
+  "license":        "MIT",
+  "repository":     { "type": "git", "url": "https://github.com/uupaa/Postal.js.git" },
+  "contributors":   [],
+  "devDependencies": {
+    "uupaa.task.js": ">= 0.8.0"
+  },
+  "lib":            "./lib/",
+  "main":           "index.js",
+  "scripts": {
+    "start":        "npm install",
+    "test":         "NODE_ENV=production NODE_PATH=lib node --harmony test/index.node.js; open test/index.html"
+  }
+}
