@@ -9,8 +9,8 @@ Postal はメッセージの送信により、オブジェクトを疎結合に�
 # Install, Setup modules
 
 ```sh
-$ git clone git@github.com:uupaa/postal.js.git
-$ cd postal.js
+$ git clone git@github.com:uupaa/Postal.js.git
+$ cd Postal.js
 $ npm install
 
     npm http GET https://registry.npmjs.org/uupaa.task.js
@@ -23,7 +23,7 @@ $ npm install
 ```sh
 $ npm test
 
-    > uupaa.postal.js@0.8.0 test /Users/username/path/postal.js
+    > uupaa.postal.js@0.8.0 test /Users/username/path/Postal.js
     > NODE_ENV=production NODE_PATH=lib node --harmony test/index.node.js; open test/index.html
 
     testPostableObject ok
