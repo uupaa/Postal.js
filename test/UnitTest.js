@@ -77,7 +77,7 @@ function Test_run(finished) { // @are Function(= null):
     }
 
     var fns = this.functions();
-    var taskRunner = new Task(fns.length, callback, null, _next).missable(fns.length);
+    var taskRunner = new Task(fns.length, callback, null, _next);//.missable(fns.length);
 
     _next();
 

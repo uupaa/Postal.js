@@ -8,6 +8,7 @@ var test = new UnitTest([
         testUnregister,
         testReuseEnvelope,
         testDirectBroadcast,
+        testMultiplePostal,
     ]);
 
 // --- interface -------------------------------------------
@@ -255,13 +256,17 @@ function testUnregister(next) {
     var buz = new Buz();
     var postal = new Postal();
 
-    postal.register(foo);
-    postal.register(bar);
-    postal.register(buz);
-    postal.unregister();
+    { // dummy
+        postal.register(foo);
+        postal.register(bar);
+        postal.register(buz);
+        postal.unregister(); // reset (unregister all)
 
-    postal.register(foo);
-    postal.unregister(foo);
+        postal.register(foo);
+        postal.unregister(foo);
+    }
+
+    // register buz
     postal.register(buz);
 
     var result = postal.to().send("hello");
@@ -346,18 +351,16 @@ function testDirectBroadcast(next) {
     var foo = new Foo();
     var bar = new Bar();
     var buz = new Buz();
-    var postal = new Postal().register(foo).register(bar).register(buz);
+    var postal1 = new Postal().register(foo).register(bar).register(buz);
 
-    var result1 = postal.send("Hello");
-    var result2 = postal.post("World");
+    var result1 = postal1.send("Hello");
+    var result2 = postal1.post("World");
 
-    if (result1[ postal.id(foo) ] === "Foo" &&
-        result1[ postal.id(bar) ] === "Bar" &&
-        result1[ postal.id(buz) ] === "Buz") {
+    if (result1[ postal1.id(foo) ] === "Foo" &&
+        result1[ postal1.id(bar) ] === "Bar" &&
+        result1[ postal1.id(buz) ] === "Buz") {
 
-        if (result2[ postal.id(foo) ] === "Foo" &&
-            result2[ postal.id(bar) ] === "Bar" &&
-            result2[ postal.id(buz) ] === "Buz") {
+        if (Object.keys(result2).length === 0) {
 
             console.log("testDirectBroadcast ok");
             next && next.pass();
@@ -366,6 +369,56 @@ function testDirectBroadcast(next) {
     }
     console.log("testDirectBroadcast ng");
     next && next.miss();
+}
+
+function testMultiplePostal(next) {
+    var task = new Task(7, function(err, args) {
+            if (err) {
+                console.log("testMultiplePostal ng");
+                next && next.miss();
+            } else {
+                console.log("testMultiplePostal ok");
+                next && next.pass();
+            }
+        });
+
+    function Foo() { }
+    function Bar() { }
+    function Buz() { }
+    Foo.prototype.inbox = function(msg, arg1, arg2) {
+        task.pass(); // pass x 2
+        return "Foo";
+    };
+    Bar.prototype.inbox = function(msg, arg1, arg2) {
+        task.pass(); // pass x 2
+        return "Bar";
+    };
+    Buz.prototype.inbox = function(msg, arg1, arg2) {
+        task.pass(); // pass x 2
+        return "Buz";
+    };
+
+    var foo = new Foo();
+    var bar = new Bar();
+    var buz = new Buz();
+    var postal1 = new Postal().register(foo).register(bar).register(buz);
+    var postal2 = new Postal().register(foo).register(bar).register(buz);
+
+    postal2.unregister();
+
+    var result1 = postal1.send("Hello");
+    var result2 = postal1.post("World");
+
+    if (result1[ postal1.id(foo) ] === "Foo" &&
+        result1[ postal1.id(bar) ] === "Bar" &&
+        result1[ postal1.id(buz) ] === "Buz") {
+
+        if (Object.keys(result2).length === 0) {
+            task.pass(); // pass x 1
+            return;
+        }
+    }
+    task.miss();
 }
 
 // --- export ----------------------------------------------
