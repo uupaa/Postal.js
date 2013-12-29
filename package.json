@@ -1,6 +1,6 @@
 {
   "name":           "uupaa.postal.js",
-  "version":        "1.0.3",
+  "version":        "1.0.4",
   "description":    "Message delivery utility.",
   "url":            "https://github.com/uupaa/Postal.js",
   "keywords":       ["message", "passing", "postal", "util", "uupaa"],
