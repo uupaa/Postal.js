@@ -1,6 +1,6 @@
 {
   "name":           "uupaa.postal.js",
-  "version":        "1.0.4",
+  "version":        "1.0.5",
   "description":    "Message delivery utility.",
   "url":            "https://github.com/uupaa/Postal.js",
   "keywords":       ["message", "passing", "postal", "util", "uupaa"],
@@ -10,6 +10,7 @@
   "contributors":   [],
   "devDependencies": {
     "uupaa.help.js": ">= 0.8.1",
+    "uupaa.test.js": ">= 0.8.0",
     "uupaa.task.js": ">= 0.8.0"
   },
   "lib":            "./lib/",

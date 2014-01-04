@@ -1,5 +1,5 @@
 require("uupaa.task.js");
+require("uupaa.test.js");
 require("../lib/Postal.js");
-require("./UnitTest.js");
-require("./TestItem.js");
+require("./test.js");
 

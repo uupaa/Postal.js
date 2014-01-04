@@ -3,6 +3,10 @@ Postal.js
 
 Postal.js is message delivery utility.
 
+# API Document
+
+https://github.com/uupaa/Postal.js/wiki/Postal
+
 # Install, Setup modules
 
 ```sh
@@ -28,8 +32,3 @@ $ npm test
     test success.
     ok.
 ```
-
-# API Document
-
-https://github.com/uupaa/Postal.js/wiki/Postal
-
