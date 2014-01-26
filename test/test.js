@@ -7,7 +7,12 @@ new Test().add([
         testReuseEnvelope,
         testDirectBroadcast,
         testMultiplePostal,
-    ]).run();
+    ]).run().worker(function(err, test) {
+        if (!err && typeof Postal_ !== "undefined") {
+            Postal = Postal_;
+            new Test(test).run().worker();
+        }
+    });
 
 function testPostableObject(next) {
     // PostableClass
@@ -144,6 +149,7 @@ function testAssert(next) {
     try {
         postal.register(unpostable); // -> error
         task.miss();
+console.log(1);
     } catch (err) {
         task.pass();
     }
@@ -151,6 +157,7 @@ function testAssert(next) {
     try {
         postal.unregister(unpostable); // -> error
         task.miss();
+console.log(2);
     } catch (err) {
         task.pass();
     }
@@ -158,6 +165,7 @@ function testAssert(next) {
     try {
         postal.to(unpostable); // -> error
         task.miss();
+console.log(3);
     } catch (err) {
         task.pass();
     }
@@ -165,6 +173,7 @@ function testAssert(next) {
     try {
         postal.omit(unpostable); // -> error
         task.miss();
+console.log(4);
     } catch (err) {
         task.pass();
     }
@@ -172,6 +181,7 @@ function testAssert(next) {
     try {
         postal.send(""); // -> error
         task.miss();
+console.log(5);
     } catch (err) {
         task.pass();
     }
@@ -179,6 +189,7 @@ function testAssert(next) {
     try {
         postal.post(""); // -> error
         task.miss();
+console.log(6);
     } catch (err) {
         task.pass();
     }
