@@ -136,7 +136,7 @@ function testAssert(next) {
     var postableClass = { inbox: function() {} };
     var postal = new Postal();
 
-    var task = new Task(6, function(err, args) {
+    var task = new Task(6, function(err, buffer, task) {
             if (err) {
                 console.log("testAssert ng");
                 next && next.miss();
@@ -335,7 +335,7 @@ function testDirectBroadcast(next) {
 }
 
 function testMultiplePostal(next) {
-    var task = new Task(7, function(err, args) {
+    var task = new Task(7, function(err, buffer, task) {
             if (err) {
                 console.log("testMultiplePostal ng");
                 next && next.miss();

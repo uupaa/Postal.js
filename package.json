@@ -1,6 +1,6 @@
 {
   "name":           "uupaa.postal.js",
-  "version":        "1.0.7",
+  "version":        "1.0.8",
   "description":    "Message delivery utility.",
   "url":            "https://github.com/uupaa/Postal.js",
   "keywords":       ["message", "passing", "postal", "util", "uupaa"],
@@ -12,7 +12,10 @@
     "start":        "node node_modules/uupaa.minify.js --keep --output ./lib/Postal.min.js ./lib/Postal.js",
     "test":         "NODE_ENV=production NODE_PATH=lib node --harmony test/index.node.js; open test/index.html"
   },
+  "dependencies": {
+  },
   "devDependencies": {
+    "uupaa.mappedarray.js": "",
     "uupaa.help.js":    "",
     "uupaa.test.js":    "",
     "uupaa.task.js":    "",
