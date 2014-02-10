@@ -8,10 +8,14 @@ new Test().add([
         testDirectBroadcast,
         testMultiplePostal,
     ]).run().worker(function(err, test) {
-        if (!err && typeof Postal_ !== "undefined") {
-            Postal = Postal_;
-            new Test(test).run().worker();
+        if (!err) {
+            var undo = Test.swap(Postal, Postal_);
+
+            new Test(test).run(function(err, test) {
+                undo = Test.undo(undo);
+            });
         }
+
     });
 
 function testPostableObject(next) {
