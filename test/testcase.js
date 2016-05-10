@@ -1,24 +1,36 @@
-new Test().add([
-        testPostableObject,
-        testTo,
-        testOmit,
-        testAssert,
-        testUnregister,
-        testReuseEnvelope,
-        testDirectBroadcast,
-        testMultiplePostal,
-    ]).run().worker(function(err, test) {
-        if (!err) {
-            var undo = Test.swap(Postal, Postal_);
+var ModuleTestPostal = (function(global) {
 
-            new Test(test).run(function(err, test) {
-                undo = Test.undo(undo);
-            });
+var test = new Test(["Postal"], { // Add the ModuleName to be tested here (if necessary).
+        disable:    false, // disable all tests.
+        browser:    true,  // enable browser test.
+        worker:     true,  // enable worker test.
+        node:       true,  // enable node test.
+        nw:         true,  // enable nw.js test.
+        el:         true,  // enable electron (render process) test.
+        button:     true,  // show button.
+        both:       true,  // test the primary and secondary modules.
+        ignoreError:false, // ignore error.
+        callback:   function() {
+        },
+        errorback:  function(error) {
+            console.error(error.message);
         }
-
     });
 
-function testPostableObject(next) {
+test.add([
+    testPostal_postableObject,
+    testPostal_to,
+    testPostal_omit,
+    testPostal_assert,
+    testPostal_unregister,
+    testPostal_reuseEnvelope,
+    testPostal_directBroadcast,
+    testPostal_multiplePostal,
+]);
+
+// --- test cases ------------------------------------------
+function testPostal_postableObject(test, pass, miss) {
+
     // PostableClass
     function PostableClass() {}
     PostableClass.prototype.inbox = function(message, param1, param2) {
@@ -44,14 +56,14 @@ function testPostableObject(next) {
     if (result[ postal.id(postableClass)  ] === "PostableClass" &&
         result[ postal.id(postableObject) ] === "postableObject") {
         console.log("testPostableObject ok");
-        next && next.pass();
+        test.done(pass());
     } else {
         console.log("testPostableObject ng");
-        next && next.miss();
+        test.done(miss());
     }
 }
 
-function testTo(next) {
+function testPostal_to(test, pass, miss) {
     function Foo() { }
     Foo.prototype.inbox = function(msg, arg1, arg2) {
       //console.log("Foo#inbox", arg1, arg2);
@@ -83,16 +95,16 @@ function testTo(next) {
                 result3[ postal.id(bar) ] === "Bar") {
 
                 console.log("testTo ok");
-                next && next.pass();
+                test.done(pass());
                 return;
             }
         }
     }
     console.log("testTo ng");
-    next && next.miss();
+    test.done(miss());
 }
 
-function testOmit(next) {
+function testPostal_omit(test, pass, miss) {
     function Foo() { }
     Foo.prototype.inbox = function(msg, arg1, arg2) {
       //console.log("Foo#inbox", arg1, arg2);
@@ -124,29 +136,29 @@ function testOmit(next) {
                 result3[ postal.id(bar) ] !== "Bar") {
 
                 console.log("testOmit ok");
-                next && next.pass();
+                test.done(pass());
                 return;
             }
         }
     }
     console.log("testOmit ng");
-    next && next.miss();
+    test.done(miss());
 }
 
-function testAssert(next) {
+function testPostal_assert(test, pass, miss) {
     function UnPostable() { }
 
     var unpostable = new UnPostable();
     var postableClass = { inbox: function() {} };
     var postal = new Postal();
 
-    var task = new Task(6, function(err, buffer, task) {
+    var task = new Task("testPostal_assert", 6, function(err, buffer, task) {
             if (err) {
                 console.log("testAssert ng");
-                next && next.miss();
+                test.done(miss());
             } else {
                 console.log("testAssert ok");
-                next && next.pass();
+                test.done(pass());
             }
         });
 
@@ -199,7 +211,7 @@ console.log(6);
     }
 }
 
-function testUnregister(next) {
+function testPostal_unregister(test, pass, miss) {
     function Foo() { }
     Foo.prototype.inbox = function(msg, arg1, arg2) {
       //console.log("Foo#inbox", arg1, arg2);
@@ -240,14 +252,14 @@ function testUnregister(next) {
 
     if (result[ postal.id(buz)  ] === "Buz") {
         console.log("testUnregister ok");
-        next && next.pass();
+        test.done(pass());
     } else {
         console.log("testUnregister ng");
-        next && next.miss();
+        test.done(miss());
     }
 }
 
-function testReuseEnvelope(next) {
+function testPostal_reuseEnvelope(test, pass, miss) {
     function Foo() { }
     Foo.prototype.inbox = function(msg, arg1, arg2) {
       //console.log("Foo#inbox", arg1, arg2);
@@ -287,16 +299,16 @@ function testReuseEnvelope(next) {
                 result2[ postal.id(buz) ] === "Buz") {
 
                 console.log("testReuseEnvelope ok");
-                next && next.pass();
+                test.done(pass());
                 return;
             }
         }
     }
     console.log("testReuseEnvelope ng");
-    next && next.miss();
+    test.done(miss());
 }
 
-function testDirectBroadcast(next) {
+function testPostal_directBroadcast(test, pass, miss) {
     function Foo() { }
     Foo.prototype.inbox = function(msg, arg1, arg2) {
       //console.log("Foo#inbox", arg1, arg2);
@@ -330,22 +342,22 @@ function testDirectBroadcast(next) {
         if (Object.keys(result2).length === 0) {
 
             console.log("testDirectBroadcast ok");
-            next && next.pass();
+            test.done(pass());
             return;
         }
     }
     console.log("testDirectBroadcast ng");
-    next && next.miss();
+    test.done(miss());
 }
 
-function testMultiplePostal(next) {
-    var task = new Task(7, function(err, buffer, task) {
+function testPostal_multiplePostal(test, pass, miss) {
+    var task = new Task("testPostal_multiplePostal", 7, function(err, buffer, task) {
             if (err) {
                 console.log("testMultiplePostal ng");
-                next && next.miss();
+                test.done(miss());
             } else {
                 console.log("testMultiplePostal ok");
-                next && next.pass();
+                test.done(pass());
             }
         });
 
@@ -387,4 +399,8 @@ function testMultiplePostal(next) {
     }
     task.miss();
 }
+
+return test.run();
+
+})(GLOBAL);
 

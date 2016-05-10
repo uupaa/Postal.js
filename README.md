@@ -1,32 +1,50 @@
-Postal.js
-=========
+# Postal.js [![Build Status](https://travis-ci.org/uupaa/Postal.js.svg)](https://travis-ci.org/uupaa/Postal.js)
 
-Postal.js is message delivery utility.
+[![npm](https://nodei.co/npm/uupaa.postal.js.svg?downloads=true&stars=true)](https://nodei.co/npm/uupaa.postal.js/)
 
-# API Document
+Message delivery subsystem (Observer pattern implementation).
 
-https://github.com/uupaa/Postal.js/wiki/Postal
+This module made of [WebModule](https://github.com/uupaa/WebModule).
 
-# Install, Setup modules
+## Documentation
+- [Spec](https://github.com/uupaa/Postal.js/wiki/)
+- [API Spec](https://github.com/uupaa/Postal.js/wiki/Postal)
 
-```sh
-$ git clone git@github.com:uupaa/Postal.js.git
-$ cd Postal.js
-$ npm install
+## Browser, NW.js and Electron
+
+```js
+<script src="<module-dir>/lib/WebModule.js"></script>
+<script src="<module-dir>/lib/Postal.js"></script>
+<script>
+
+var receiverObject = {
+        inbox: function(message) { // message -> "Hello"
+            return true;
+        }
+    };
+
+var postal = new Postal();
+
+postal.register(receiverObject);
+postal.to().send("Hello");
+postal.unregister(); // unregister all
+
+</script>
 ```
 
-# Minify
+## WebWorkers
 
-```sh
-$ npm start
+```js
+importScripts("<module-dir>/lib/WebModule.js");
+importScripts("<module-dir>/lib/Postal.js");
 
-  or
-
-$ node node_modules/uupaa.minify.js --keep --output ./lib/Postal.min.js ./lib/Postal.js
 ```
 
-# Test
+## Node.js
 
-```sh
-$ npm test
+```js
+require("<module-dir>/lib/WebModule.js");
+require("<module-dir>/lib/Postal.js");
+
 ```
+

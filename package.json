@@ -1,28 +1,78 @@
 {
-  "name":           "uupaa.postal.js",
-  "version":        "1.0.9",
-  "description":    "Message delivery utility.",
-  "url":            "https://github.com/uupaa/Postal.js",
-  "keywords":       ["message", "passing", "postal", "util", "uupaa"],
+  "name": "uupaa.postal.js",
+  "version": "1.1.0",
+  "description": "Message delivery subsystem (Observer pattern implementation).",
+  "url": "https://github.com/uupaa/Postal.js",
+  "keywords": ["message", "passing", "Observer", "uupaa", "WebModule", "Unstable"],
   "repository": {
-    "type":         "git",
-    "url":          "https://github.com/uupaa/Postal.js.git"
+    "type": "git",
+    "url": "https://github.com/uupaa/Postal.js.git"
   },
   "scripts": {
-    "start":        "node node_modules/uupaa.minify.js --keep --output ./lib/Postal.min.js ./lib/Postal.js",
-    "test":         "NODE_ENV=production NODE_PATH=lib node --harmony test/index.node.js; open test/index.html"
+    "sync": "node ../WebModule/run/sync.js; npm update; node ../WebModule/run/page.js",
+    "wiki": "node ../WebModule/run/wiki.js",
+    "min": "node ../WebModule/run/minify.js --verbose --strict --keep --pretty",
+    "build": "node ../WebModule/run/minify.js --verbose --strict --keep --release",
+    "watch": "node ../WebModule/run/watch.js --verbose --run lint",
+    "page": "node ../WebModule/run/page.js --verbose",
+    "test": "npm run min; npm run node; npm run browser",
+    "node": "NODE_ENV=production NODE_PATH=lib node test/node/index.js",
+    "noded": "NODE_ENV=production NODE_PATH=lib node --debug-brk test/node/index.js",
+    "browser": "open http://localhost:8000/Postal.js/test/browser/index.html",
+    "el": "electron test/el",
+    "nw": "nw test/nw",
+    "add-src": "node ../WebModule/run/add-src.js",
+    "add-subclass": "node ../WebModule/run/add-subclass.js",
+    "sim": "node ../WebModule/run/sim.js http://localhost:8000/Postal.js/test/browser/index.html",
+    "simx": "node ../WebModule/run/sim.js stop",
+    "lint": "eslint lib/*.js",
+    "score": "node ../WebModule/run/score.js; open lint/plato/index.html",
+    "patch": "node ../WebModule/run/patch.js",
+    "setup": "node ../WebModule/run/setup.js",
+    "start": "cd ../; Python -m SimpleHTTPServer 8000 &",
+    "stop": "killall -- Python -m SimpleHTTPServer 8000; exit 0"
   },
-  "dependencies": {
+  "webmodule": {
+    "develop": false,
+    "label": ["@dev"],
+    "browser": {
+      "output": "release/Postal.b.min.js",
+      "source": [
+        "lib/Postal.js"
+      ]
+    },
+    "worker": {
+      "output": "release/Postal.w.min.js",
+      "source": [
+        "lib/Postal.js"
+      ]
+    },
+    "node": {
+      "output": "release/Postal.n.min.js",
+      "source": [
+        "lib/Postal.js"
+      ]
+    },
+    "nw": {
+      "output": "release/Postal.nw.min.js",
+      "source": [
+        "lib/Postal.js"
+      ]
+    },
+    "el": {
+      "output": "release/Postal.el.min.js",
+      "source": [
+        "lib/Postal.js"
+      ]
+    }
   },
+  "dependencies": {},
   "devDependencies": {
-    "uupaa.help.js":    "",
-    "uupaa.test.js":    "",
-    "uupaa.task.js":    "",
-    "uupaa.minify.js":  ""
+    "uupaa.task.js": ""
   },
-  "lib":            "./lib/",
-  "main":           "./index.js",
-  "author":         "uupaa <uupaa.js@gmail.com>",
-  "license":        "MIT",
-  "contributors":   []
+  "lib": "./lib/",
+  "main": "./index.js",
+  "author": "uupaa <uupaa.js@gmail.com>",
+  "license": "MIT",
+  "contributors": []
 }
