@@ -239,7 +239,7 @@ function testPostal_unregister(test, pass, miss) {
         postal.register(foo);
         postal.register(bar);
         postal.register(buz);
-        postal.unregister(); // reset (unregister all)
+        postal.unregisterAll(); // reset
 
         postal.register(foo);
         postal.unregister(foo);
@@ -383,7 +383,7 @@ function testPostal_multiplePostal(test, pass, miss) {
     var postal1 = new Postal().register(foo).register(bar).register(buz);
     var postal2 = new Postal().register(foo).register(bar).register(buz);
 
-    postal2.unregister();
+    postal2.unregisterAll(); // reset
 
     var result1 = postal1.send("Hello");
     var result2 = postal1.post("World");
