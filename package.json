@@ -1,6 +1,6 @@
 {
   "name": "uupaa.postal.js",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Message delivery subsystem (Observer pattern implementation).",
   "url": "https://github.com/uupaa/Postal.js",
   "keywords": ["message", "passing", "Observer", "uupaa", "WebModule", "Unstable"],

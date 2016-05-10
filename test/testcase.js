@@ -26,6 +26,7 @@ test.add([
     testPostal_reuseEnvelope,
     testPostal_directBroadcast,
     testPostal_multiplePostal,
+    testPostal_first,
 ]);
 
 // --- test cases ------------------------------------------
@@ -399,6 +400,39 @@ function testPostal_multiplePostal(test, pass, miss) {
     }
     task.miss();
 }
+
+function testPostal_first(test, pass, miss) {
+    function Foo() { }
+    Foo.prototype.inbox = function(msg, arg1, arg2) {
+        if (msg === "Foo") {
+            return "1";
+        }
+        return null;
+    };
+
+    function Bar() { }
+    Bar.prototype.inbox = function(msg, arg1, arg2) {
+        if (msg === "Bar") {
+            return "2";
+        }
+        return null;
+    };
+
+    var foo = new Foo();
+    var bar = new Bar();
+    var postal = new Postal();
+
+    postal.register(foo).register(bar);
+
+    var result = postal.first("Foo");              // Foo#inbox と Bar#inbox にメッセージが届きます
+
+    if (result === "1") {
+        test.done(pass());
+    } else {
+        test.done(miss());
+    }
+}
+
 
 return test.run();
 
