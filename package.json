@@ -1,9 +1,9 @@
 {
   "name": "uupaa.postal.js",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "Message delivery subsystem (Observer pattern implementation).",
   "url": "https://github.com/uupaa/Postal.js",
-  "keywords": ["message", "passing", "Observer", "uupaa", "WebModule", "Unstable"],
+  "keywords": ["message", "passing", "Observer", "pub/sub", "uupaa", "WebModule", "Unstable"],
   "repository": {
     "type": "git",
     "url": "https://github.com/uupaa/Postal.js.git"

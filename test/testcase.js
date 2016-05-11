@@ -20,7 +20,7 @@ var test = new Test(["Postal"], { // Add the ModuleName to be tested here (if ne
 test.add([
     testPostal_postableObject,
     testPostal_to,
-    testPostal_omit,
+    testPostal_remove,
     testPostal_assert,
     testPostal_unregister,
     testPostal_reuseEnvelope,
@@ -105,7 +105,7 @@ function testPostal_to(test, pass, miss) {
     test.done(miss());
 }
 
-function testPostal_omit(test, pass, miss) {
+function testPostal_remove(test, pass, miss) {
     function Foo() { }
     Foo.prototype.inbox = function(msg, arg1, arg2) {
       //console.log("Foo#inbox", arg1, arg2);
@@ -124,25 +124,25 @@ function testPostal_omit(test, pass, miss) {
 
     postal.register(foo).register(bar);
 
-    var result1 = postal.omit(bar).send("hello"); // Foo#inbox にメッセージが届きます
+    var result1 = postal.remove(bar).send("hello"); // Foo#inbox にメッセージが届きます
     if (result1[ postal.id(foo) ] === "Foo" &&
         result1[ postal.id(bar) ] !== "Bar") {
 
-        var result2 = postal.to().omit(bar).send("hello"); // Foo#inbox にメッセージが届きます
+        var result2 = postal.to().remove(bar).send("hello"); // Foo#inbox にメッセージが届きます
         if (result2[ postal.id(foo) ] === "Foo" &&
             result2[ postal.id(bar) ] !== "Bar") {
 
-            var result3 = postal.to(bar).omit(bar).send("hello"); // どこにもメッセージは届きません
+            var result3 = postal.to(bar).remove(bar).send("hello"); // どこにもメッセージは届きません
             if (result3[ postal.id(foo) ] !== "Foo" &&
                 result3[ postal.id(bar) ] !== "Bar") {
 
-                console.log("testOmit ok");
+                console.log("testremove ok");
                 test.done(pass());
                 return;
             }
         }
     }
-    console.log("testOmit ng");
+    console.log("testremove ng");
     test.done(miss());
 }
 
@@ -188,7 +188,7 @@ console.log(3);
     }
 
     try {
-        postal.omit(unpostable); // -> error
+        postal.remove(unpostable); // -> error
         task.miss();
 console.log(4);
     } catch (err) {
